@@ -16,11 +16,11 @@ function NhanVien() {
 
 NhanVien.prototype.calcSalary = function(){
     if(this.competence === "Sếp"){
-        return this.salary * 3 * this.timeWork;
+        return this.salary * 3;
     }else if(this.competence === "Trưởng phòng"){
-        return this.salary * 2 * this.timeWork;
+        return this.salary * 2;
     }else{
-        return this.salary * this.timeWork;
+        return this.salary;
     }
 }
 
