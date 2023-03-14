@@ -159,6 +159,12 @@ document.getElementById("btnCapNhat").onclick = function () {
   }
   document.getElementById("tknv").value = '';
   document.getElementById("name").value = '';
+  document.getElementById("email").value = '';
+  document.getElementById("password").value = '';
+  document.getElementById("datepicker").value = '';
+  document.getElementById("luongCB").value = '';
+  document.getElementById("chucvu").value = '';
+  document.getElementById("gioLam").value = '';
 };
 
 // lưu thông tin
