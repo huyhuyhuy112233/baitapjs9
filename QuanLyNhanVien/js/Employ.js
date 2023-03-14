@@ -1,5 +1,22 @@
 var mangNhanVien = [];
 
+document.getElementById("btnThem").onclick = function() {
+  var nv = new NhanVien();
+  nv.account = document.getElementById("tknv").value;
+  nv.name = document.getElementById("name").value;
+  nv.email = document.getElementById("email").value;
+  nv.password = document.getElementById("password").value;
+  nv.dateOfWork = document.getElementById("datepicker").value;
+  nv.salary = +document.getElementById("luongCB").value;
+  nv.coefficientssalary = document.getElementById("chucvu").value;
+  nv.timeWork = +document.getElementById("gioLam").value;
+
+  var tagSelect = document.getElementById("chucvu");
+  var viTriTheChon = tagSelect.selectedIndex;
+  var competence = tagSelect.options[viTriTheChon].innerHTML;
+  nv.competence = competence;
+  document.getElementById('btnThemNV').disabled = false;
+}
 // them nhan vien
 document.getElementById("btnThemNV").onclick = function () {
   var nv = new NhanVien();
@@ -25,7 +42,6 @@ document.getElementById("btnThemNV").onclick = function () {
   renderTableThemNhanVien(mangNhanVien);
   luulocalStorage();
 };
-
 // hien thi nhan vien ra table
 function renderTableThemNhanVien(arrNhanVien) {
   var htmlString = "";
@@ -51,6 +67,8 @@ function renderTableThemNhanVien(arrNhanVien) {
                         >
                         <button
                         class="btn btn-danger mt-2"
+                        data-toggle="modal"
+                        data-target="#myModal"
                         onclick="fixNhanVien('${nv.account}')"
                         >
                             Chỉnh Sửa
@@ -72,6 +90,7 @@ function deleteNhanVien(indelNV) {
     }
   }
   mangNhanVien.splice(indexDel, 1);
+  luulocalStorage();
   renderTableThemNhanVien(mangNhanVien);
   //    alert(indelNV);
 }
@@ -89,7 +108,8 @@ function fixNhanVien(maSinhVienClick) {
       document.getElementById("datepicker").value =
         mangNhanVien[index].dateOfWork;
       document.getElementById("luongCB").value = mangNhanVien[index].salary;
-      document.getElementById("chucvu").value = mangNhanVien[index].competence;
+      document.getElementById("chucvu").value = mangNhanVien[index].coefficientssalary;
+      console.log(mangNhanVien[index].competence);
       document.getElementById("gioLam").value = mangNhanVien[index].timeWork;
       break;
     }
@@ -98,11 +118,13 @@ function fixNhanVien(maSinhVienClick) {
   if (!isValid) {
     return;
   }
+  luulocalStorage();
 }
 // cập nhật thông tin nhân viên
 document.getElementById("btnCapNhat").onclick = function () {
+  document.getElementById("tknv").disabled = false;
+  document.getElementById("btnThemNV").disabled = false;
   var nhanVienEdit = new NhanVien();
-
   var tagSelect = document.getElementById("chucvu");
   var viTriTheChon = tagSelect.selectedIndex;
   var competence = tagSelect.options[viTriTheChon].innerHTML;
@@ -129,11 +151,14 @@ document.getElementById("btnCapNhat").onclick = function () {
       break;
     }
   }
-
   renderTableThemNhanVien(mangNhanVien);
-  luuLocalStrage();
-  document.getElementById("tknv").disabled = false;
-  document.getElementById("btnThemNV").disabled = false;
+  luulocalStorage();
+  let isValid = validate();
+  if (!isValid) {
+    return;
+  }
+  document.getElementById("tknv").value = '';
+  document.getElementById("name").value = '';
 };
 
 // lưu thông tin
